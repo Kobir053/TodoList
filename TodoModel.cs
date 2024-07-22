@@ -2,28 +2,27 @@
 
 namespace TodoList
 {
-    [XmlRoot("Todo")] 
+    [XmlRoot("Todo")]
     public class TodoModel
     {
-        [XmlElement("ID")] 
+        [XmlElement("ID")]
         public int Id { get; set; }
-
-        [XmlElement("Title")] 
+        [XmlElement("Title")]
         public string Title { get; set; }
-
-        [XmlElement("Date")] 
+        [XmlElement("Date")]
         public string XmlDate
         {
-            get { return Date.ToString("yyyy-MM-dd"); } 
-            set { Date = DateOnly.Parse(value); } 
+            get { return Date.ToString("yyyy-MM-dd"); }
+            set { Date = DateOnly.Parse(value); }
         }
-
-        [XmlIgnore] 
+        [XmlIgnore]
         public DateOnly Date { get; set; }
-
+        [XmlElement("IsDone")]
+        public bool IsDone { get; set; }
         public TodoModel()
         {
-
+            IsDone = false;
         }
+
     }
 }

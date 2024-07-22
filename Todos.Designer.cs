@@ -1,4 +1,4 @@
-﻿namespace TodoList
+namespace TodoList
 {
     partial class Todos
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             textbox_title = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             label_title = new ReaLTaiizor.Controls.MaterialLabel();
             label_date = new ReaLTaiizor.Controls.MaterialLabel();
@@ -35,7 +36,11 @@
             checkbox_isDone = new ReaLTaiizor.Controls.MaterialCheckBox();
             dataGridView_tasks = new DataGridView();
             button_action = new ReaLTaiizor.Controls.MaterialButton();
+            cancelBTN = new ReaLTaiizor.Controls.MaterialButton();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            deleteToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridView_tasks).BeginInit();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // textbox_title
@@ -67,13 +72,14 @@
             textbox_title.TextAlign = HorizontalAlignment.Left;
             textbox_title.TrailingIcon = null;
             textbox_title.UseSystemPasswordChar = false;
+            textbox_title.TextChanged += UpdateCancelButton;
             // 
             // label_title
             // 
             label_title.AutoSize = true;
             label_title.Depth = 0;
             label_title.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label_title.Location = new Point(42, 94);
+            label_title.Location = new Point(42, 93);
             label_title.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label_title.Name = "label_title";
             label_title.Size = new Size(87, 19);
@@ -121,12 +127,13 @@
             hopeDatePicker1.TabIndex = 4;
             hopeDatePicker1.Text = "hopeDatePicker1";
             hopeDatePicker1.ValueTextColor = Color.FromArgb(43, 133, 228);
+            hopeDatePicker1.MouseClick += UpdateCancelButton;
             // 
             // checkbox_isDone
             // 
             checkbox_isDone.AutoSize = true;
             checkbox_isDone.Depth = 0;
-            checkbox_isDone.Location = new Point(42, 551);
+            checkbox_isDone.Location = new Point(42, 605);
             checkbox_isDone.Margin = new Padding(0);
             checkbox_isDone.MouseLocation = new Point(-1, -1);
             checkbox_isDone.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -142,14 +149,17 @@
             // dataGridView_tasks
             // 
             dataGridView_tasks.AllowUserToAddRows = false;
+            dataGridView_tasks.AllowUserToDeleteRows = false;
             dataGridView_tasks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView_tasks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView_tasks.Location = new Point(412, 128);
+            dataGridView_tasks.Location = new Point(411, 128);
             dataGridView_tasks.Name = "dataGridView_tasks";
+            dataGridView_tasks.ReadOnly = true;
             dataGridView_tasks.RowHeadersWidth = 51;
-            dataGridView_tasks.Size = new Size(340, 460);
+            dataGridView_tasks.Size = new Size(463, 460);
             dataGridView_tasks.TabIndex = 6;
-            dataGridView_tasks.CellContentClick += dataGridView_tasks_CellContentClick;
+            dataGridView_tasks.CellClick += dataGridView_tasks_CellContentClick;
+            dataGridView_tasks.CellMouseClick += RightMouseClick;
             // 
             // button_action
             // 
@@ -159,12 +169,12 @@
             button_action.HighEmphasis = true;
             button_action.Icon = null;
             button_action.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            button_action.Location = new Point(196, 552);
-            button_action.Margin = new Padding(4, 6, 4, 6);
+            button_action.Location = new Point(231, 611);
+            button_action.Margin = new Padding(5, 5, 5, 5);
             button_action.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             button_action.Name = "button_action";
             button_action.NoAccentTextColor = Color.Empty;
-            button_action.Size = new Size(139, 36);
+            button_action.Size = new Size(85, 36);
             button_action.TabIndex = 7;
             button_action.Text = "ADD|EDIT";
             button_action.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -172,11 +182,47 @@
             button_action.UseVisualStyleBackColor = true;
             button_action.Click += button_action_Click;
             // 
+            // cancelBTN
+            // 
+            cancelBTN.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            cancelBTN.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            cancelBTN.Depth = 0;
+            cancelBTN.HighEmphasis = true;
+            cancelBTN.Icon = null;
+            cancelBTN.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            cancelBTN.Location = new Point(231, 669);
+            cancelBTN.Margin = new Padding(5, 5, 5, 5);
+            cancelBTN.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            cancelBTN.Name = "cancelBTN";
+            cancelBTN.NoAccentTextColor = Color.Empty;
+            cancelBTN.Size = new Size(133, 36);
+            cancelBTN.TabIndex = 7;
+            cancelBTN.Text = "cancel | clear";
+            cancelBTN.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            cancelBTN.UseAccentColor = false;
+            cancelBTN.UseVisualStyleBackColor = true;
+            cancelBTN.Click += cancelBTN_Click;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(211, 56);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(210, 24);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += DeleteTodo;
+            // 
             // Todos
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(976, 728);
+            Controls.Add(cancelBTN);
             Controls.Add(button_action);
             Controls.Add(dataGridView_tasks);
             Controls.Add(checkbox_isDone);
@@ -184,12 +230,19 @@
             Controls.Add(label_date);
             Controls.Add(label_title);
             Controls.Add(textbox_title);
+            MaximumSize = new Size(976, 728);
+            MinimumSize = new Size(976, 728);
             Name = "Todos";
             Text = "Todos";
             ((System.ComponentModel.ISupportInitialize)dataGridView_tasks).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
+
+
+
+
 
         #endregion
 
@@ -200,5 +253,8 @@
         private ReaLTaiizor.Controls.MaterialCheckBox checkbox_isDone;
         private DataGridView dataGridView_tasks;
         private ReaLTaiizor.Controls.MaterialButton button_action;
+        private ReaLTaiizor.Controls.MaterialButton cancelBTN;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
